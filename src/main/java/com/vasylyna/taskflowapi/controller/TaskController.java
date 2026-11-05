@@ -5,6 +5,9 @@ import com.vasylyna.taskflowapi.entity.Task;
 import com.vasylyna.taskflowapi.service.TaskService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import com.vasylyna.taskflowapi.dto.TaskResponse;
+import com.vasylyna.taskflowapi.dto.TaskRequest;
+import jakarta.validation.Valid;
 
 import java.util.List;
 
@@ -18,28 +21,35 @@ public class TaskController {
         this.taskService = taskService;
     }
 
+
     @GetMapping
-    public List<Task> getAllTasks() {
+    public List<TaskResponse> getAllTasks() {
         return taskService.getAllTasks();
     }
 
     @GetMapping("/{id}")
-    public Task getTaskById(@PathVariable Long id) {
-        return taskService.getTaskById(id);
+    public TaskResponse getTaskById(@PathVariable Long id) {
+        return taskService.getTaskResponseById(id);
     }
+
+
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Task createTask(@RequestBody Task task) {
-        return taskService.createTask(task);
+    public TaskResponse createTask(@Valid @RequestBody TaskRequest request) {
+        return taskService.createTask(request);
     }
 
+
+
     @PutMapping("/{id}")
-    public Task updateTask(
+    public TaskResponse updateTask(
             @PathVariable Long id,
-            @RequestBody Task task) {
-        return taskService.updateTask(id, task);
+            @Valid @RequestBody TaskRequest request) {
+
+        return taskService.updateTask(id, request);
     }
+
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
