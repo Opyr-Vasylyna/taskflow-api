@@ -8,6 +8,11 @@ import org.springframework.web.bind.annotation.*;
 import com.vasylyna.taskflowapi.dto.TaskResponse;
 import com.vasylyna.taskflowapi.dto.TaskRequest;
 import jakarta.validation.Valid;
+import com.vasylyna.taskflowapi.enums.TaskStatus;
+import com.vasylyna.taskflowapi.enums.TaskPriority;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -21,10 +26,13 @@ public class TaskController {
         this.taskService = taskService;
     }
 
-
     @GetMapping
-    public List<TaskResponse> getAllTasks() {
-        return taskService.getAllTasks();
+    public Page<TaskResponse> getAllTasks(
+            @RequestParam(required = false) TaskStatus status,
+            @RequestParam(required = false) TaskPriority priority,
+            Pageable pageable) {
+
+        return taskService.getTasks(status, priority, pageable);
     }
 
     @GetMapping("/{id}")

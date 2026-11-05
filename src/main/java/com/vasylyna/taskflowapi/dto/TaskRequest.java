@@ -3,6 +3,8 @@ package com.vasylyna.taskflowapi.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+import com.vasylyna.taskflowapi.enums.TaskStatus;
+import com.vasylyna.taskflowapi.enums.TaskPriority;
 
 public class TaskRequest {
 
@@ -13,8 +15,8 @@ public class TaskRequest {
     @Size(max = 2000, message = "Description must not exceed 2000 characters")
     private String description;
 
-    private String status;
-    private String priority;
+    private TaskStatus status;
+    private TaskPriority priority;
 
     public TaskRequest() {
     }
@@ -35,19 +37,20 @@ public class TaskRequest {
         this.description = description;
     }
 
-    public String getStatus() {
+    public TaskStatus getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(TaskStatus status) {
         this.status = status;
     }
 
-    public String getPriority() {
+    public TaskPriority getPriority() {
         return priority;
     }
 
-    public void setPriority(String priority) {
+    public void setPriority(TaskPriority priority) {
         this.priority = priority;
     }
+
 }

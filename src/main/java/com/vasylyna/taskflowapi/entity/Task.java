@@ -3,6 +3,8 @@ package com.vasylyna.taskflowapi.entity;
 
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
+import com.vasylyna.taskflowapi.enums.TaskStatus;
+import com.vasylyna.taskflowapi.enums.TaskPriority;
 
 @Entity
 @Table(name = "tasks")
@@ -18,11 +20,13 @@ public class Task {
     @Column(length = 2000)
     private String description;
 
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private String status = "TODO";
+    private TaskStatus status = TaskStatus.TODO;
 
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private String priority = "MEDIUM";
+    private TaskPriority priority = TaskPriority.MEDIUM;
 
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
@@ -55,19 +59,19 @@ public class Task {
         this.description = description;
     }
 
-    public String getStatus() {
+    public TaskStatus getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(TaskStatus status) {
         this.status = status;
     }
 
-    public String getPriority() {
+    public TaskPriority getPriority() {
         return priority;
     }
 
-    public void setPriority(String priority) {
+    public void setPriority(TaskPriority priority) {
         this.priority = priority;
     }
 

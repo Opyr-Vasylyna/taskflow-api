@@ -3,18 +3,20 @@ package com.vasylyna.taskflowapi.dto;
 
 import java.time.LocalDateTime;
 import com.vasylyna.taskflowapi.dto.TaskResponse;
+import com.vasylyna.taskflowapi.enums.TaskStatus;
+import com.vasylyna.taskflowapi.enums.TaskPriority;
 
 public class TaskResponse {
 
     private Long id;
     private String title;
     private String description;
-    private String status;
-    private String priority;
+    private TaskStatus status;
+    private TaskPriority priority;
     private LocalDateTime createdAt;
 
     public TaskResponse(Long id, String title, String description,
-                        String status, String priority,
+                        TaskStatus status, TaskPriority priority,
                         LocalDateTime createdAt) {
         this.id = id;
         this.title = title;
@@ -36,11 +38,11 @@ public class TaskResponse {
         return description;
     }
 
-    public String getStatus() {
+    public TaskStatus getStatus() {
         return status;
     }
 
-    public String getPriority() {
+    public TaskPriority getPriority() {
         return priority;
     }
 

@@ -6,8 +6,15 @@ import com.vasylyna.taskflowapi.entity.Task;
 import com.vasylyna.taskflowapi.repository.TaskRepository;
 import org.springframework.stereotype.Service;
 import com.vasylyna.taskflowapi.dto.TaskRequest;
+import com.vasylyna.taskflowapi.enums.TaskStatus;
+import com.vasylyna.taskflowapi.enums.TaskPriority;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import com.vasylyna.taskflowapi.enums.TaskStatus;
+import com.vasylyna.taskflowapi.enums.TaskPriority;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
-import java.util.List;
 import java.util.NoSuchElementException;
 
 @Service
@@ -19,13 +26,27 @@ public class TaskService {
         this.taskRepository = taskRepository;
     }
 
+    public Page<TaskResponse> getTasks(
+            TaskStatus status,
+            TaskPriority priority,
+            Pageable pageable) {
 
-    public List<TaskResponse> getAllTasks() {
-        return taskRepository.findAll()
-                .stream()
-                .map(this::toResponse)
-                .toList();
+        Page<Task> tasks;
+
+        if (status != null && priority != null) {
+            tasks = taskRepository.findByStatusAndPriority(
+                    status, priority, pageable);
+        } else if (status != null) {
+            tasks = taskRepository.findByStatus(status, pageable);
+        } else if (priority != null) {
+            tasks = taskRepository.findByPriority(priority, pageable);
+        } else {
+            tasks = taskRepository.findAll(pageable);
+        }
+
+        return tasks.map(this::toResponse);
     }
+
 
     public TaskResponse getTaskResponseById(Long id) {
         Task task = getTaskById(id);
