@@ -1,0 +1,32 @@
+
+# Git
+.git
+.gitignore
+
+# IntelliJ IDEA
+.idea
+*.iml
+
+# Maven build output
+target/
+
+# Logs
+*.log
+logs/
+
+# Environment variables and secrets
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Operating system files
+.DS_Store
+
+# Documentation
+README.md
+
+# Docker Compose
+compose.yaml
+docker-compose.yml
